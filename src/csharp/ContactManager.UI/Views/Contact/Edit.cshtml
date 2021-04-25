@@ -1,0 +1,69 @@
+﻿@model ContactManager.Entity.Entity.Contact
+@{
+    if (Model.ID > 0)
+    {
+        ViewBag.Title = "Edit Contact";
+    }
+    else
+    {
+        ViewBag.Title = "Add Contact";
+    }
+}
+<div class="row">
+    <div class="form-group">
+        <h4>@ViewBag.Title</h4>
+    </div>
+</div>
+
+@using (Html.BeginForm("Save", "Contact", FormMethod.Post, new { @id = "frmcontact" }))
+{
+    //HtmlHelper.UnobtrusiveJavaScriptEnabled = true;
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                @Html.HiddenFor(h => h.ID)
+                @Html.LabelFor(l => l.FirstName)
+                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(l => l.LastName)
+                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(l => l.Email)
+                @Html.TextBoxFor(m => m.Email, new { @type = "text", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(l => l.PhoneNumber)
+                @Html.TextBoxFor(m => m.PhoneNumber, new { @type = "text", @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-check">
+                @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+                @Html.LabelFor(l => l.IsActive)
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            <a class="btn btn-light" asp-area="" asp-controller="Contact" asp-action="Index">Back</a>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div class="row">
+        <div class="form-group">
+            @if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+            {
+                <div class="text-danger">@ViewBag.ErrorMessage</div>
+            }
+            @if (!string.IsNullOrEmpty(ViewBag.Message))
+            {
+                <div class="text-success">@ViewBag.Message</div>
+            }
+        </div>
+    </div>
+}
